@@ -3,10 +3,9 @@ var router = express.Router();
 const mongoose = require('mongoose');
 const Personnage = mongoose.model('Personnage');
 
-
 router.get('/', (req, res) => {
     res.render("personnage/crud", {
-        viewTitle : "Ajouter un personnage"
+        viewTitle: "Ajouter une personne"
     });
 });
 
@@ -17,31 +16,29 @@ router.post('/', (req, res) => {
         updateRecord(req, res);
 });
 
-function insertRecord(req,res){
-    var personnage =new Personnage();
-    personnage.lastName = req.body.lastName;
-    personnage.firstName = req.body.firstName;
+
+function insertRecord(req, res) {
+    var personnage = new Personnage();
+    personnage.fullName = req.body.fullName;
     personnage.email = req.body.email;
     personnage.mobile = req.body.mobile;
     personnage.city = req.body.city;
     personnage.save((err, doc) => {
         if (!err)
-        res.redirect('personnage/list');
-    else {
-        if (err.name == 'ValidationError') {
-            handleValidationError(err, req.body);
-            res.render("personnage/crud", {
-                viewTitle : "Ajouter un personnage",
-                personnage: req.body
-            });
+            res.redirect('personnage/list');
+        else {
+            if (err.name == 'ValidationError') {
+                handleValidationError(err, req.body);
+                res.render("personnage/crud", {
+                    viewTitle: "Ajouter une personne",
+                    personnage: req.body
+                });
+            }
+            else
+                console.log('Erreur durant insertion : ' + err);
         }
-        else
-            console.log('Error during record insertion : ' + err);
-    }
     });
 }
-
-
 
 function updateRecord(req, res) {
    Personnage.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
@@ -50,12 +47,12 @@ function updateRecord(req, res) {
             if (err.name == 'ValidationError') {
                 handleValidationError(err, req.body);
                 res.render("personnage/crud", {
-                    viewTitle: 'Mise à personnage',
+                    viewTitle: 'Mise à jour personne',
                     personnage: req.body
                 });
             }
             else
-                console.log('Erreur lors de la modification : ' + err);
+                console.log('Erreur durant la mise à jour : ' + err);
         }
     });
 }
@@ -69,7 +66,7 @@ router.get('/list', (req, res) => {
             });
         }
         else {
-            console.log('Erreur lors de la récupération de la liste des personnage :' + err);
+            console.log('Erreur lors de la récupération de la liste des personnages :' + err);
         }
     });
 });
@@ -94,10 +91,10 @@ function handleValidationError(err, body) {
 }
 
 router.get('/:id', (req, res) => {
-    Personnage.findById(req.params.id, (err, doc) => {
+   Personnage.findById(req.params.id, (err, doc) => {
         if (!err) {
             res.render("personnage/crud", {
-                viewTitle: "Modifier un personnage",
+                viewTitle: "Mise à jour personnage",
                 personnage: doc
             });
         }
@@ -109,11 +106,8 @@ router.get('/delete/:id', (req, res) => {
         if (!err) {
             res.redirect('/personnage/list');
         }
-        else { console.log('Erreur lors de la suppression :' + err); }
+        else { console.log('Erreur durant la supression :' + err); }
     });
 });
-
-
-
 
 module.exports = router;

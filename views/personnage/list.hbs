@@ -1,4 +1,4 @@
-<h3><a class="btn btn-secondary" href="/personnage"><i class="fa fa-plus"></i> Ajouter</a> Liste des personnage</h3>
+<h3><a class="btn btn-success" href="/personnage"><i class="fa fa-plus"></i> Ajouter</a> Liste des personnage</h3>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -19,8 +19,8 @@
             <td>{{this.mobile}}</td>
             <td>{{this.city}}</td>
             <td>
-                <a href="/personnage/{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></a>
-                <a href="/personnage/delete/{{this._id}}" onclick="return confirm('Etes vous sûr de vouloir supprimer cette personne ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
+                <a href="/personnage/{{this._id}}"><i class="fa fa-pencil fa-lg text-primary" aria-hidden="true"></i></a>
+                <a href="/personnage/delete/{{this._id}}" onclick="return confirm('Etes vous sûr de vouloir supprimer cette personne ?');"><i class="fa fa-trash fa-lg text-danger" aria-hidden="true"></i></a>
             </td>
         </tr>
         {{/each}}
