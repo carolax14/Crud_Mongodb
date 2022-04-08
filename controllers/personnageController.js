@@ -19,7 +19,8 @@ router.post('/', (req, res) => {
 
 function insertRecord(req, res) {
     var personnage = new Personnage();
-    personnage.fullName = req.body.fullName;
+    personnage.lastName = req.body.lastName;
+    personnage.firstName = req.body.firstName;
     personnage.email = req.body.email;
     personnage.mobile = req.body.mobile;
     personnage.city = req.body.city;
@@ -47,7 +48,7 @@ function updateRecord(req, res) {
             if (err.name == 'ValidationError') {
                 handleValidationError(err, req.body);
                 res.render("personnage/crud", {
-                    viewTitle: 'Mise à jour personne',
+                    viewTitle: 'Modifier une personne',
                     personnage: req.body
                 });
             }
@@ -94,7 +95,7 @@ router.get('/:id', (req, res) => {
    Personnage.findById(req.params.id, (err, doc) => {
         if (!err) {
             res.render("personnage/crud", {
-                viewTitle: "Mise à jour personnage",
+                viewTitle: "Modifier une personnage",
                 personnage: doc
             });
         }
