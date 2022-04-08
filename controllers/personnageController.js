@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
         updateRecord(req, res);
 });
 
-
+// Create
 function insertRecord(req, res) {
     var personnage = new Personnage();
     personnage.lastName = req.body.lastName;
@@ -41,6 +41,7 @@ function insertRecord(req, res) {
     });
 }
 
+//Update
 function updateRecord(req, res) {
    Personnage.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
         if (!err) { res.redirect('personnage/list'); }
@@ -73,6 +74,7 @@ router.get('/list', (req, res) => {
 });
 
 
+//Affiche un message d'erreur si certains champs ne sont pas compléter
 function handleValidationError(err, body) {
     for (field in err.errors) {
         switch (err.errors[field].path) {
@@ -91,6 +93,7 @@ function handleValidationError(err, body) {
     }
 }
 
+//Affiche l'id du personnage dans url lors d'une modification
 router.get('/:id', (req, res) => {
    Personnage.findById(req.params.id, (err, doc) => {
         if (!err) {
@@ -102,6 +105,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
+//Affiche l'id du personnage dans url lors d'une suppression
 router.get('/delete/:id', (req, res) => {
     Personnage.findByIdAndRemove(req.params.id, (err, doc) => {
         if (!err) {
@@ -111,4 +115,5 @@ router.get('/delete/:id', (req, res) => {
     });
 });
 
+//Exporte le routage
 module.exports = router;
