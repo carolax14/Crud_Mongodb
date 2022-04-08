@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+//Créer un objet "personnage" à l'aide du constructeur "Schema"
 var personnageSchema = new mongoose.Schema({
     lastName: {
         type: String,
@@ -26,4 +28,5 @@ personnageSchema.path('email').validate((val) => {
     return emailRegex.test(val);
 }, 'Invalid e-mail.');
 
+//Créer un modèle à partir du schéma
 mongoose.model('Personnage', personnageSchema);
